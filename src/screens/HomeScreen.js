@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, Button, Picker } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native-gesture-handler";
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = data => console.log(data);
@@ -159,7 +159,7 @@ const HomeScreen = () => {
                         )}
                 />
             </View>
-            <Button title="Next" onPress={handleSubmit(onSubmit)} />
+            <Button title="Next" onPress={()=>navigation.navigate('Camera')} />
         </View>
     );
 };
