@@ -27,6 +27,7 @@ const HomeScreen = () => {
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
                         <TextInput
+                            style={styles.input}
                             onBlur={onBlur}
                             onChangeText={value => onChange(value)}
                             value={value}
@@ -36,7 +37,7 @@ const HomeScreen = () => {
 
                 />
             </View>
-            <View>
+            <View >
                 <Text style={styles.label}>Gender:</Text>
                 <Controller
                     name="gender"
@@ -45,6 +46,7 @@ const HomeScreen = () => {
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
                         <Picker
+                        style = {styles.dropdown}
                         selectedValue={selectedValue}
                         onValueChange={(itemValue, itemIndex) => {
                             setSelectedValue(itemValue)
@@ -70,6 +72,7 @@ const HomeScreen = () => {
                         <View>
                             <Text>Years</Text>
                             <TextInput
+                                style={styles.input}
                                 onBlur={onBlur}
                                 onChangeText={value => onChange(value)}
                                 value={value}
@@ -87,6 +90,7 @@ const HomeScreen = () => {
                         <View>
                             <Text>Months</Text>
                             <TextInput
+                                style={styles.input}
                                 onBlur={onBlur}
                                 onChangeText={value => onChange(value)}
                                 value={value}
@@ -105,6 +109,7 @@ const HomeScreen = () => {
                         defaultValue=""
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
+                            style = {styles.dropdown}
                                 selectedValue={selectedValue2}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setSelectedValue2(itemValue)
@@ -126,6 +131,7 @@ const HomeScreen = () => {
                         defaultValue=""
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
+                            style = {styles.dropdown}
                                 selectedValue={selectedValue3}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setSelectedValue3(itemValue)
@@ -147,6 +153,7 @@ const HomeScreen = () => {
                         defaultValue=""
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
+                            style = {styles.dropdown}
                                 selectedValue={selectedValue4}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setSelectedValue4(itemValue)
@@ -167,6 +174,21 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 20
+  },
+  container: {
+      flex: 1,
+      justifyContent: "center",
+  },
+  input: {
+    height: 40,
+    width: 100,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10
+  },
+  dropdown: {
+    height: 50,
+    width: 150
   }
 });
 
