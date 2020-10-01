@@ -6,20 +6,23 @@ import { TextInput } from "react-native-gesture-handler";
 const HomeScreen = ({navigation}) => {
 
     const { control, handleSubmit, errors } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data) => {
+        console.log(data);
+        navigation.navigate('ClickPhoto');
+    };
 
-    const [selectedValue, setSelectedValue] = useState("Male");
+    const [selectedValue, setSelectedValue] = useState("male");
 
-    const [selectedValue2, setSelectedValue2] = React.useState('yes');
-    const [selectedValue3, setSelectedValue3] = React.useState('yes');
-    const [selectedValue4, setSelectedValue4] = React.useState('yes');
+    const [selectedValue2, setSelectedValue2] = React.useState('no');
+    const [selectedValue3, setSelectedValue3] = React.useState('no');
+    const [selectedValue4, setSelectedValue4] = React.useState('no');
 
     console.log("errors", errors);
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Please fill the details.</Text>
-            <View>
-                <Text style={styles.label}>Age:</Text>
+            <Text style={styles.heading}>Please fill the details.{"\n"}</Text>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>Age: </Text>
                 <Controller
                     name="age"
                     control={control}
@@ -42,8 +45,8 @@ const HomeScreen = ({navigation}) => {
                 <Controller
                     name="gender"
                     control={control}
-                    rules={{required: "This is required."}}
-                    defaultValue=""
+                    // rules={{required: "This is required."}}
+                    defaultValue="male"
                     render = {({ onChange, onBlur, value }) =>(
                         <Picker
                         style = {styles.dropdown}
@@ -62,15 +65,15 @@ const HomeScreen = ({navigation}) => {
                 />
             </View>
             <Text>Duration of Problems: </Text>
-            <View>
+            <View >
                 <Controller
                     name="years"
                     control={control}
                     rules={{required: "This is required."}}
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
-                        <View>
-                            <Text>Years</Text>
+                        <View style={styles.inputContainer}>
+                            <Text>Years: </Text>
                             <TextInput
                                 style={styles.input}
                                 onBlur={onBlur}
@@ -87,8 +90,8 @@ const HomeScreen = ({navigation}) => {
                     rules={{required: "This is required."}}
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
-                        <View>
-                            <Text>Months</Text>
+                        <View  style={styles.inputContainer}>
+                            <Text>Months: </Text>
                             <TextInput
                                 style={styles.input}
                                 onBlur={onBlur}
@@ -105,8 +108,7 @@ const HomeScreen = ({navigation}) => {
                 <Controller
                         name="teeth"
                         control={control}
-                        rules={{required: "This is required."}}
-                        defaultValue=""
+                        defaultValue="no"
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
                             style = {styles.dropdown}
@@ -127,8 +129,7 @@ const HomeScreen = ({navigation}) => {
                 <Controller
                         name="tobacco"
                         control={control}
-                        rules={{required: "This is required."}}
-                        defaultValue=""
+                        defaultValue="no"
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
                             style = {styles.dropdown}
@@ -149,8 +150,7 @@ const HomeScreen = ({navigation}) => {
                 <Controller
                         name="smoke"
                         control={control}
-                        rules={{required: "This is required."}}
-                        defaultValue=""
+                        defaultValue="no"
                         render = {({ onChange, onBlur, value }) =>(
                             <Picker
                             style = {styles.dropdown}
@@ -166,18 +166,26 @@ const HomeScreen = ({navigation}) => {
                         )}
                 />
             </View>
-            <Button title="Next" onPress={()=>navigation.navigate('Camera')} />
+            <View style={styles.button}>
+                <Button title="Next" onPress={handleSubmit(onSubmit)} />
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 20
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center"
   },
   container: {
       flex: 1,
       justifyContent: "center",
+  },
+  inputContainer:{
+    flexDirection: "row",
+    margin: 10
   },
   input: {
     height: 40,
@@ -189,6 +197,9 @@ const styles = StyleSheet.create({
   dropdown: {
     height: 50,
     width: 150
+  },
+  button:{
+    alignItems:'center'
   }
 });
 
