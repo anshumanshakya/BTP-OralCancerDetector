@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "682198926900",
+    "firebase_url": "https://oralcancerdetector.firebaseio.com",
+    "project_id": "oralcancerdetector",
+    "storage_bucket": "oralcancerdetector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682198926900:android:58824763d1fec13bf06c61",
+        "android_client_info": {
+          "package_name": "com.reactnativefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682198926900-mfhvp7e3ta5564c5fi2nj7jc1sh6n554.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASvCDJcIHhn5ci9K-IBAtxRvGDBjtldJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682198926900-mfhvp7e3ta5564c5fi2nj7jc1sh6n554.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

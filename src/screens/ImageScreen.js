@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text,View,Button,StyleSheet,Image} from 'react-native'
-const HomeScreen = ({route,navigation})=>{
-   const { photo } = navigation.state.params;
+const ImageScreen = ({route,navigation})=>{
+   const { photo } = route.params;
    return (
 
       <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
@@ -26,4 +26,4 @@ const styles =StyleSheet.create({
    }
 });
 
-export default HomeScreen;
+export default ImageScreen;

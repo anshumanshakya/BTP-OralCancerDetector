@@ -2,13 +2,19 @@ import React , {useState} from "react";
 import { Text, StyleSheet, View, Button, Picker } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native-gesture-handler";
+import { firebase } from '../firebase/config'
 
-const HomeScreen = ({navigation}) => {
 
+const HomeScreen = (props,{navigation}) => {
+    console.log(props)
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
         navigation.navigate('ClickPhoto');
+    };
+
+    const logout = () => {
+        firebase.auth().signOut();
     };
 
     const [selectedValue, setSelectedValue] = useState("male");
@@ -20,6 +26,7 @@ const HomeScreen = ({navigation}) => {
     console.log("errors", errors);
     return (
         <View style={styles.container}>
+            <Button title="Log Out" onPress={logout} />
             <Text style={styles.heading}>Please fill the details.{"\n"}</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Age: </Text>
