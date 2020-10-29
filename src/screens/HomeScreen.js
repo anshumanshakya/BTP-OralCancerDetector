@@ -5,8 +5,8 @@ import { TextInput } from "react-native-gesture-handler";
 import { firebase } from '../firebase/config'
 
 
-const HomeScreen = (props,{navigation}) => {
-    console.log(props)
+const HomeScreen = ({navigation}) => {
+    //console.log(props)
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
