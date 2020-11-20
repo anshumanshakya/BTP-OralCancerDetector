@@ -25,7 +25,7 @@ const RegistrationScreen = ({navigation}) => {
             .then((response) => {
                 const uid = response.user.uid
                 const data = {
-                    id: uid,
+                    uid: uid,
                     email,
                     fullName,
                 };

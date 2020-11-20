@@ -1,16 +1,18 @@
 import React , {useState} from "react";
-import { Text, StyleSheet, View, Button, Picker } from "react-native";
+import { Text, StyleSheet, View, Button} from "react-native";
+import {Picker} from '@react-native-picker/picker' 
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native-gesture-handler";
 import { firebase } from '../firebase/config'
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({route,navigation}) => {
     //console.log(props)
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        navigation.navigate('ClickPhoto');
+        //console.log(route.params.user);
+        navigation.navigate('ClickPhoto', {'uid': route.params.user.uid , 'userData' : data});
     };
 
     const logout = () => {
@@ -26,7 +28,10 @@ const HomeScreen = ({navigation}) => {
     console.log("errors", errors);
     return (
         <View style={styles.container}>
-            <Button title="Log Out" onPress={logout} />
+            <Text style={{textAlign: 'center'}}>
+                Welcome <Text style={{fontWeight: "bold"}}>{route.params.user.email}</Text>
+            </Text>
+            <View style={styles.logoutbutton}><Button title="Log Out" onPress={logout} /></View>
             <Text style={styles.heading}>Please fill the details.{"\n"}</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Age: </Text>
@@ -206,6 +211,10 @@ const styles = StyleSheet.create({
     width: 150
   },
   button:{
+    alignItems:'center'
+  },
+  logoutbutton:{
+    margin: 20,
     alignItems:'center'
   }
 });

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Text,View,Button,StyleSheet,Image} from 'react-native'
-const SecondScreen = ({navigation})=>{
+const SecondScreen = ({route,navigation})=>{
    
     return (
         <View style={styles.container}>
@@ -16,7 +16,7 @@ const SecondScreen = ({navigation})=>{
                 7. Confirm a good quality photograph before final submission.{"\n"}
             </Text>
             <View style={{alignItems: "center"}}>
-                <Button title="Take Photo" onPress= {() => {navigation.navigate('Camera')}}/>
+                <Button title="Take Photo" onPress= {() => {navigation.navigate('Camera', {'uid': route.params.uid, 'userData' : route.params.userData})}}/>
             </View>
         </View>
    );

@@ -1,7 +1,7 @@
 import React,{ useState,useEffect,useRef }from 'react';
 import {Text,StyleSheet, View,TouchableOpacity} from 'react-native';
 import { Camera } from 'expo-camera';
-const CameraScreen=({navigation})=>{
+const CameraScreen=({route,navigation})=>{
     const [hasPermission, setHasPermission] = useState(null);
     const[cameraRef,setCameraRef]=useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -47,7 +47,7 @@ const CameraScreen=({navigation})=>{
                 if(cameraRef){
                 let photo = await cameraRef.takePictureAsync('photo');
                 console.log('photo', photo);
-                navigation.navigate('Image',{'photo':photo});
+                navigation.navigate('Image',{'photo':photo, 'uid': route.params.uid, 'userData' : route.params.userData});
                 }
                 }}>
                 <View style={{ 
