@@ -94,7 +94,7 @@ const ImageScreen = ({route,navigation})=>{
             ) : (
                <View style={styles.buttonContainer}>
                   <View style={{ marginRight: 20}}>
-                     <Button title="Retake" onPress={()=>{navigation.navigate('Camera')}}/>
+                     <Button title="Retake" onPress={()=>{navigation.navigate('ClickPhoto')}}/>
                   </View>
                      <Button title="Submit" onPress={uploadImage}/>
                </View>

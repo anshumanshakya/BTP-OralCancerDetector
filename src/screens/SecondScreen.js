@@ -1,7 +1,33 @@
-import React from 'react'
-import {Text,View,Button,StyleSheet,Image} from 'react-native'
+import React, {useEffect } from 'react';
+import {Text,View,Button,StyleSheet,Image, Platform} from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 const SecondScreen = ({route,navigation})=>{
-   
+
+    useEffect(() => {
+        (async () => {
+        if (Platform.OS !== 'web') {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+            }
+        }
+        })();
+    }, []);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+        navigation.navigate('Image',{'photo':result, 'uid': route.params.uid, 'userData' : route.params.userData});
+        }
+    };
+
     return (
         <View style={styles.container}>
             
@@ -15,8 +41,13 @@ const SecondScreen = ({route,navigation})=>{
                 6. Distance: Mobile to patient, minimum 1 foot, maximum 3 feet.{"\n"}
                 7. Confirm a good quality photograph before final submission.{"\n"}
             </Text>
-            <View style={{alignItems: "center"}}>
-                <Button title="Take Photo" onPress= {() => {navigation.navigate('Camera', {'uid': route.params.uid, 'userData' : route.params.userData})}}/>
+            <View style={{flex: 1, alignItems: "center"}}>
+                <View>
+                    <Button title="Pick from Gallery" onPress={pickImage} />  
+                </View>
+                <View style={{marginTop: 20}}>
+                    <Button title="Take Photo" onPress= {() => {navigation.navigate('Camera', {'uid': route.params.uid, 'userData' : route.params.userData})}}/>
+                </View>
             </View>
         </View>
    );

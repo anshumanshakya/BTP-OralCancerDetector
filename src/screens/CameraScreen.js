@@ -30,7 +30,7 @@ const CameraScreen=({route,navigation})=>{
             }}>
             <TouchableOpacity
               style={{
-                flex: 0.1,
+                flex: 0.2,
                 alignSelf: 'flex-end',
                 alignItems: 'center',
               }}
@@ -41,9 +41,9 @@ const CameraScreen=({route,navigation})=>{
                     : Camera.Constants.Type.back
                 );
               }}>
-              <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
+              <Text style={{ fontSize: 18, marginBottom: 20, color: 'white' }}> Flip </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{alignSelf: 'center'}} onPress={async() => {
+            <TouchableOpacity style={{flex: 0.6, marginBottom: 20, alignItems: 'center', alignSelf: 'flex-end'}} onPress={async() => {
                 if(cameraRef){
                 let photo = await cameraRef.takePictureAsync('photo');
                 console.log('photo', photo);
