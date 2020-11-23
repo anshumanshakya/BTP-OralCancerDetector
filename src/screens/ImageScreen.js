@@ -17,7 +17,7 @@ const ImageScreen = ({route,navigation})=>{
    //console.log(imageLink)
 
    const uploadImage = async () => {
-      const { uri } = { uri: photo.uri };
+      const { uri } = { uri: photo };
       const filename = uri.substring(uri.lastIndexOf('/') + 1);
       setUploading(true);
       setTransferred(0);
@@ -74,7 +74,7 @@ const ImageScreen = ({route,navigation})=>{
 
       <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
          <Button title="Log Out" onPress={logout} />
-         <Image source={{ uri: photo.uri }} style={{width:380,height:550}}/>
+         <Image source={{ uri: photo }} style={{width:380,height:550}}/>
          <Picker
             style = {styles.dropdown}
             selectedValue={cancerous}

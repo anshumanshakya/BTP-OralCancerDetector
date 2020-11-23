@@ -14,6 +14,21 @@ const SecondScreen = ({route,navigation})=>{
         })();
     }, []);
 
+
+    const takeImage = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+        console.log(result);
+        if (!result.cancelled) {
+          navigation.navigate('Image',{'photo':result.uri, 'uid': route.params.uid, 'userData' : route.params.userData});
+        }
+      };
+
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -24,7 +39,7 @@ const SecondScreen = ({route,navigation})=>{
         console.log(result);
 
         if (!result.cancelled) {
-        navigation.navigate('Image',{'photo':result, 'uid': route.params.uid, 'userData' : route.params.userData});
+        navigation.navigate('Image',{'photo':result.uri, 'uid': route.params.uid, 'userData' : route.params.userData});
         }
     };
 
@@ -46,7 +61,7 @@ const SecondScreen = ({route,navigation})=>{
                     <Button title="Pick from Gallery" onPress={pickImage} />  
                 </View>
                 <View style={{marginTop: 20}}>
-                    <Button title="Take Photo" onPress= {() => {navigation.navigate('Camera', {'uid': route.params.uid, 'userData' : route.params.userData})}}/>
+                    <Button title="Take Photo" onPress= {takeImage}/>
                 </View>
             </View>
         </View>

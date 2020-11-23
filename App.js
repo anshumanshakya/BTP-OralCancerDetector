@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import HomeScreen from "./src/screens/HomeScreen";
 import SecondScreen from "./src/screens/SecondScreen";
 import ImageScreen from "./src/screens/ImageScreen"
-import CameraScreen from "./src/screens/CameraScreen"
 import LoginScreen from "./src/screens/LoginScreen"
 import RegistrationScreen from "./src/screens/RegistrationScreen"
 import LoadingScreen from "./src/screens/LoadingScreen"
@@ -22,7 +21,6 @@ class App extends Component {
           <Stack.Screen name="Home" component={HomeScreen}/>
           <Stack.Screen name="ClickPhoto" component={SecondScreen} />
           <Stack.Screen name="Image" component={ImageScreen} />
-          <Stack.Screen name="Camera" component={CameraScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
         </Stack.Navigator>
