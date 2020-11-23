@@ -73,8 +73,14 @@ const ImageScreen = ({route,navigation})=>{
    return (
 
       <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
-         <Button title="Log Out" onPress={logout} />
-         <Image source={{ uri: photo }} style={{width:380,height:550}}/>
+         <View style = {styles.buttonContainer}>
+            <Button title="Home " onPress={() => {navigation.navigate('Home')}} />
+            <View style={{ marginLeft: 30}}>
+               <Button title="Log Out" onPress={logout} />
+            </View>
+         </View>
+         
+         <Image source={{ uri: photo }} style={{width:380,height:420}}/>
          <Picker
             style = {styles.dropdown}
             selectedValue={cancerous}
@@ -119,7 +125,11 @@ const styles =StyleSheet.create({
    dropdown: {
       height: 50,
       width: 200
-   }
+   },
+   logoutbutton:{
+      margin: 20,
+      alignItems:'center'
+    }
 });
 
 export default ImageScreen;

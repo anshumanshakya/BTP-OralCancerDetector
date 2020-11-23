@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from '../styles/LoginStyle';
 import { firebase } from '../firebase/config'
@@ -8,12 +8,14 @@ import { firebase } from '../firebase/config'
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const [loading, setLoading] = useState(false)
+ 
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
 
     const onLoginPress = () => {
+        setLoading(true);
         firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
@@ -39,7 +41,7 @@ const LoginScreen = ({navigation}) => {
                 alert(error)
             })
     }
-
+    
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
@@ -68,11 +70,17 @@ const LoginScreen = ({navigation}) => {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+                {loading ? (
+                    <View style={[styles.container, styles.horizontal]}>
+                        <ActivityIndicator size="large" color="#0000ff"/>
+                    </View> 
+                ) : (
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onLoginPress()}>
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
+                )}
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
                 </View>

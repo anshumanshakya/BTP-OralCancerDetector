@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from '../styles/RegistrationStyle';
 import { firebase } from '../firebase/config'
@@ -9,12 +9,15 @@ const RegistrationScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
 
     const onRegisterPress = () => {
+        setLoading(true)
         if (password !== confirmPassword) {
             alert("Passwords don't match.")
             return
@@ -92,11 +95,17 @@ const RegistrationScreen = ({navigation}) => {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => onRegisterPress()}>
-                    <Text style={styles.buttonTitle}>Create account</Text>
-                </TouchableOpacity>
+                {loading ? (
+                    <View style={[styles.container, styles.horizontal]}>
+                        <ActivityIndicator size="large" color="#0000ff"/>
+                    </View> 
+                ) : (
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => onRegisterPress()}>
+                        <Text style={styles.buttonTitle}>Create account</Text>
+                    </TouchableOpacity>
+                )}
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
