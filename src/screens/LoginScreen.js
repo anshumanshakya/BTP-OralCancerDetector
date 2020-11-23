@@ -34,10 +34,12 @@ const LoginScreen = ({navigation}) => {
                         navigation.navigate('Home', {user})
                     })
                     .catch(error => {
+                        setLoading(false)
                         alert(error)
                     });
             })
             .catch(error => {
+                setLoading(false)
                 alert(error)
             })
     }

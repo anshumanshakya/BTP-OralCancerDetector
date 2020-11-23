@@ -40,10 +40,12 @@ const RegistrationScreen = ({navigation}) => {
                         navigation.navigate('Home', {user: data})
                     })
                     .catch((error) => {
+                        setLoading(false)
                         alert(error)
                     });
             })
             .catch((error) => {
+                setLoading(false)
                 alert(error)
             });
     }
