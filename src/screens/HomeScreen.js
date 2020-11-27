@@ -2,8 +2,10 @@ import React , {useState} from "react";
 import { Text, StyleSheet, View, Button} from "react-native";
 import {Picker} from '@react-native-picker/picker' 
 import { useForm, Controller } from "react-hook-form";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput} from "react-native-gesture-handler";
+import { Input } from 'react-native-elements';
 import { firebase } from '../firebase/config'
+import { color } from "react-native-reanimated";
 
 
 const HomeScreen = ({route,navigation}) => {
@@ -20,12 +22,28 @@ const HomeScreen = ({route,navigation}) => {
     };
 
     const [selectedValue, setSelectedValue] = useState("male");
-
     const [selectedValue2, setSelectedValue2] = React.useState('no');
     const [selectedValue3, setSelectedValue3] = React.useState('no');
     const [selectedValue4, setSelectedValue4] = React.useState('no');
 
+    const validateAge =(value)=>{
+       if(value==="") return "*This Field is Required";
+       else if(isNaN(value)) return "*Age must be number";
+       else if(value>120) return "*Please Enter valid Age "
+    }
+    const validateYears =(value)=>{
+        if(value==="") return "*This Field is Required";
+        else if(isNaN(value)) return "*No of Years must be number";
+        else if(value<0||value>100) return "*Please Enter valid No of Years"
+    }
+    const validateMonths =(value)=>{
+        if(value==="") return "*This Field is Required";
+        else if(isNaN(value)) return "*No of Months must be number";
+        else if(value<0||value>11) return "*Please Enter valid No of Months"
+    }
+
     console.log("errors", errors);
+    const star=<Text style={{color:"red"}}>*</Text>
     return (
         <View style={styles.container}>
             <Text style={{textAlign: 'center'}}>
@@ -33,26 +51,30 @@ const HomeScreen = ({route,navigation}) => {
             </Text>
             <View style={styles.logoutbutton}><Button title="Log Out" onPress={logout} /></View>
             <Text style={styles.heading}>Please fill the details.{"\n"}</Text>
+
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Age: </Text>
-                <Controller
-                    name="age"
-                    control={control}
-                    rules={{required: "This is required."}}
-                    defaultValue=""
-                    render = {({ onChange, onBlur, value }) =>(
-                        <TextInput
-                            style={styles.input}
-                            onBlur={onBlur}
-                            onChangeText={value => onChange(value)}
-                            value={value}
-                        />
-
-                    )}
-
-                />
+                <View >
+                    <Controller
+                        name="age"
+                        control={control}
+                        rules={{validate:{validateAge}}}
+                        defaultValue=""
+                        render = {({ onChange, onBlur, value }) =>(
+                            <TextInput
+                                keyboardType="numeric"
+                                style={styles.input}
+                                onBlur={onBlur}
+                                onChangeText={value => onChange(value)}
+                                value={value}
+                            />             
+                        )}
+                    />
+                <Text style={styles.errorMessage}>{errors?.age?.message}</Text>    
+                </View>
             </View>
-            <View >
+
+            <View style={styles.inputContainer}>
                 <Text style={styles.label}>Gender:</Text>
                 <Controller
                     name="gender"
@@ -76,47 +98,57 @@ const HomeScreen = ({route,navigation}) => {
 
                 />
             </View>
-            <Text>Duration of Problems: </Text>
-            <View >
+           
+            <View style={{margin:10}}>
+                <Text>Duration of Problems: </Text>
                 <Controller
                     name="years"
                     control={control}
-                    rules={{required: "This is required."}}
+                    rules={{validate:{validateYears}}}
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
                         <View style={styles.inputContainer}>
                             <Text>Years: </Text>
-                            <TextInput
-                                style={styles.input}
-                                onBlur={onBlur}
-                                onChangeText={value => onChange(value)}
-                                value={value}
-                            />
+                            <View>
+                                <TextInput
+                                    keyboardType="numeric"
+                                    style={styles.input}
+                                    onBlur={onBlur}
+                                    onChangeText={value => onChange(value)}
+                                    value={value}
+                                /> 
+                                <Text style={styles.errorMessage}>{errors?.years?.message}</Text>
+                            </View>
                         </View>
                     )}
 
                 />
+        
                 <Controller
                     name="months"
                     control={control}
-                    rules={{required: "This is required."}}
+                    rules={{validate:{validateMonths}}}
                     defaultValue=""
                     render = {({ onChange, onBlur, value }) =>(
                         <View  style={styles.inputContainer}>
                             <Text>Months: </Text>
-                            <TextInput
-                                style={styles.input}
-                                onBlur={onBlur}
-                                onChangeText={value => onChange(value)}
-                                value={value}
-                            />
+                            <View>
+                                <TextInput
+                                    keyboardType="numeric"
+                                    style={styles.input}
+                                    onBlur={onBlur}
+                                    onChangeText={value => onChange(value)}
+                                    value={value}
+                                />
+                                <Text style={styles.errorMessage}>{errors?.months?.message}</Text>
+                            </View>             
                         </View>
                     )}
-
                 />
             </View>
-            <Text>Bad teeth / previous mouth problem: </Text>
-            <View>
+         
+            <View style={{marginLeft:10,marginBottom:10}}>
+                <Text>Bad teeth / previous mouth problem: </Text>
                 <Controller
                         name="teeth"
                         control={control}
@@ -136,8 +168,9 @@ const HomeScreen = ({route,navigation}) => {
                         )}
                 />
             </View>
-            <Text>Do you chew Tobacco:</Text>
-            <View>
+            
+            <View style={{marginLeft:10,marginBottom:10}}>
+                 <Text>Do you chew Tobacco:</Text>
                 <Controller
                         name="tobacco"
                         control={control}
@@ -157,8 +190,9 @@ const HomeScreen = ({route,navigation}) => {
                         )}
                 />
             </View>
-            <Text>Do you smoke:</Text>
-            <View>
+       
+            <View style={{marginLeft:10,marginBottom:10}}>
+                <Text>Do you smoke:</Text>
                 <Controller
                         name="smoke"
                         control={control}
@@ -178,9 +212,11 @@ const HomeScreen = ({route,navigation}) => {
                         )}
                 />
             </View>
+
             <View style={styles.button}>
                 <Button title="Next" onPress={handleSubmit(onSubmit)} />
             </View>
+
         </View>
     );
 };
@@ -194,17 +230,19 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       justifyContent: "center",
+      backgroundColor:"white",
+      margin: 10,
   },
   inputContainer:{
     flexDirection: "row",
-    margin: 10
+    margin:10
   },
   input: {
     height: 40,
-    width: 100,
+    width: 200,
     padding: 10,
-    backgroundColor: 'white',
-    borderRadius: 10
+    borderWidth:1,
+    borderRadius: 5
   },
   dropdown: {
     height: 50,
@@ -216,6 +254,9 @@ const styles = StyleSheet.create({
   logoutbutton:{
     margin: 20,
     alignItems:'center'
+  },
+  errorMessage:{
+    color :'red',
   }
 });
 
