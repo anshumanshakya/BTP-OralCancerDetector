@@ -1,10 +1,27 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet, ActivityIndicator} from 'react-native'
+import {Text, View, StyleSheet, ActivityIndicator, BackHandler, Alert} from 'react-native'
 
 import { firebase } from '../firebase/config'
 
 class LoadingScreen extends Component {
     state = {loading: true, user: null};
+
+    handleBackButton = () => {
+      Alert.alert(
+          'Exit App',
+          'Exiting the application?', [{
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+          }, {
+              text: 'OK',
+              onPress: () => BackHandler.exitApp()
+          }, ], {
+              cancelable: false
+          }
+       )
+       return true;
+    }
 
     componentDidMount(){
         const usersRef = firebase.firestore().collection('users');
@@ -22,7 +39,16 @@ class LoadingScreen extends Component {
                 this.props.navigation.navigate('Login');
             }
           });
+
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+
     render() {
         return(
           <View style={[styles.container, styles.horizontal]}>

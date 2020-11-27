@@ -16,7 +16,7 @@ class App extends Component {
   render(){
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName = "Loading">
+        <Stack.Navigator initialRouteName = "Loading" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Home" component={HomeScreen}/>
           <Stack.Screen name="ClickPhoto" component={SecondScreen} />

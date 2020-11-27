@@ -1,5 +1,5 @@
-import React , {useState} from "react";
-import { Text, StyleSheet, View, Button} from "react-native";
+import React , {useState, useEffect} from "react";
+import { Text, StyleSheet, View, Button, BackHandler, Alert} from "react-native";
 import {Picker} from '@react-native-picker/picker' 
 import { useForm, Controller } from "react-hook-form";
 import { TextInput} from "react-native-gesture-handler";
@@ -10,6 +10,33 @@ import { color } from "react-native-reanimated";
 
 const HomeScreen = ({route,navigation}) => {
     //console.log(props)
+
+    useEffect(() => {
+        const handleBackButton = () => {
+            Alert.alert(
+                'Exit App',
+                'Exiting the application?', [{
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                }, {
+                    text: 'OK',
+                    onPress: () => BackHandler.exitApp()
+                }, ], {
+                    cancelable: false
+                }
+             )
+             return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          handleBackButton
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+
     const { control, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);

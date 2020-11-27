@@ -1,6 +1,9 @@
 import React, {useEffect } from 'react';
 import {Text,View,Button,StyleSheet,Image, Platform} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+import { firebase } from '../firebase/config'
+
 const SecondScreen = ({route,navigation})=>{
 
     useEffect(() => {
@@ -14,6 +17,9 @@ const SecondScreen = ({route,navigation})=>{
         })();
     }, []);
 
+    const logout = () => {
+        firebase.auth().signOut();
+     };
 
     const takeImage = async () => {
         let result = await ImagePicker.launchCameraAsync({
@@ -44,7 +50,12 @@ const SecondScreen = ({route,navigation})=>{
 
     return (
         <View style={styles.container}>
-            
+            <View style = {styles.buttonContainer}>
+                <Button title="Home " onPress={() => {navigation.navigate('Home')}} />
+                <View style={{ marginLeft: 30}}>
+                <Button title="Log Out" onPress={logout} />
+                </View>
+            </View>
             <Text style={styles.heading}>Photo instructions:{"\n"}</Text>
             <Text>
                 1. JPG, JPEG or HEIC format.{"\n"}
@@ -69,13 +80,20 @@ const SecondScreen = ({route,navigation})=>{
 
 const styles =StyleSheet.create({
     container:{ 
-        flex: 1
+        flex: 1,
+        marginTop: 50,
     },
     heading:{
         fontWeight: 'bold',
         fontSize:20,
         marginTop: 20
-   }
+    },
+    buttonContainer:{
+        flexDirection:"row",
+        margin: 20,
+        alignItems:'center',
+        justifyContent:'center' 
+    }
 });
 
 export default SecondScreen;

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator,  BackHandler, Alert} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from '../styles/RegistrationStyle';
 import { firebase } from '../firebase/config'
@@ -11,6 +11,31 @@ const RegistrationScreen = ({navigation}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        const handleBackButton = () => {
+            Alert.alert(
+                'Exit App',
+                'Exiting the application?', [{
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                }, {
+                    text: 'OK',
+                    onPress: () => BackHandler.exitApp()
+                }, ], {
+                    cancelable: false
+                }
+             )
+             return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          handleBackButton
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')

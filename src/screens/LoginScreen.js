@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Image, Text, TextInput, TouchableOpacity, View, ActivityIndicator, BackHandler, Alert} from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from '../styles/LoginStyle';
 import { firebase } from '../firebase/config'
@@ -13,6 +13,32 @@ const LoginScreen = ({navigation}) => {
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
+
+    useEffect(() => {
+        const handleBackButton = () => {
+            Alert.alert(
+                'Exit App',
+                'Exiting the application?', [{
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                }, {
+                    text: 'OK',
+                    onPress: () => BackHandler.exitApp()
+                }, ], {
+                    cancelable: false
+                }
+             )
+             return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          handleBackButton
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     const onLoginPress = () => {
         setLoading(true);
@@ -32,6 +58,7 @@ const LoginScreen = ({navigation}) => {
                         }
                         const user = firestoreDocument.data()
                         navigation.navigate('Home', {user})
+                        setLoading(false)
                     })
                     .catch(error => {
                         setLoading(false)
