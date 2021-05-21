@@ -7,6 +7,7 @@ import ImageScreen from "./src/screens/ImageScreen"
 import LoginScreen from "./src/screens/LoginScreen"
 import RegistrationScreen from "./src/screens/RegistrationScreen"
 import LoadingScreen from "./src/screens/LoadingScreen"
+import PredictionScreen from './src/screens/PredictionScreen';
 
 
 const Stack = createStackNavigator();
@@ -21,6 +22,7 @@ class App extends Component {
           <Stack.Screen name="Home" component={HomeScreen}/>
           <Stack.Screen name="ClickPhoto" component={SecondScreen} />
           <Stack.Screen name="Image" component={ImageScreen} />
+          <Stack.Screen name="Prediction" component={PredictionScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Registration" component={RegistrationScreen} />
         </Stack.Navigator>

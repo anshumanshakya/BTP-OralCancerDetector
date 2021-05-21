@@ -2,11 +2,11 @@ import React , {useState, useEffect} from "react";
 import { Text, StyleSheet, View, Button, BackHandler, Alert} from "react-native";
 import {Picker} from '@react-native-picker/picker' 
 import { useForm, Controller } from "react-hook-form";
-import { TextInput} from "react-native-gesture-handler";
+import { ScrollView, TextInput} from "react-native-gesture-handler";
 import { Input } from 'react-native-elements';
 import { firebase } from '../firebase/config'
 import { color } from "react-native-reanimated";
-
+import CheckBox from '@react-native-community/checkbox';
 
 const HomeScreen = ({route,navigation}) => {
     //console.log(props)
@@ -69,14 +69,24 @@ const HomeScreen = ({route,navigation}) => {
         else if(value<0||value>11) return "*Please Enter valid No of Months"
     }
 
+    const [agree, setAgree] = useState(false);
+
+    const checkboxHandler = () => {
+        // if agree === true, it will be set to false
+        // if agree === false, it will be set to true
+        setAgree(!agree);
+    }
+
     console.log("errors", errors);
     const star=<Text style={{color:"red"}}>*</Text>
     return (
         <View style={styles.container}>
+        
             <Text style={{textAlign: 'center'}}>
                 Welcome <Text style={{fontWeight: "bold"}}>{route.params.user.email}</Text>
             </Text>
             <View style={styles.logoutbutton}><Button title="Log Out" onPress={logout} /></View>
+            <ScrollView>
             <Text style={styles.heading}>Please fill the details.{"\n"}</Text>
 
             <View style={styles.inputContainer}>
@@ -240,10 +250,26 @@ const HomeScreen = ({route,navigation}) => {
                 />
             </View>
 
-            <View style={styles.button}>
-                <Button title="Next" onPress={handleSubmit(onSubmit)} />
+            <View style={{marginTop:10, marginLeft:10,marginBottom:10}}>
+                <Text style={{fontWeight: "bold"}}>Please read and agree to the Consent Statement below:</Text>
+                <Text>
+                    I am aware that the information and image will be used to develop a mobile application 
+                    aimed at detection of oral cancer. My identity will not be disclosed. Data will be anonymous. 
+                    My participation does not bear any impact on my treatment or follow up.
+                </Text>
+                <View style={styles.checkboxContainer}>
+                    <CheckBox
+                    value={agree}
+                    onValueChange={setAgree}
+                    />
+                    <Text style={{marginLeft : 8, marginTop: 3}}>I agree to the Consent Statement</Text>
+                </View>
             </View>
 
+            <View style={styles.button}>
+                <Button disabled={!agree} title="Next" onPress={handleSubmit(onSubmit)} />
+            </View>
+            </ScrollView>
         </View>
     );
 };
@@ -258,7 +284,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "center",
       backgroundColor:"white",
-      margin: 10,
+      marginTop: 40,
   },
   inputContainer:{
     flexDirection: "row",
@@ -276,7 +302,8 @@ const styles = StyleSheet.create({
     width: 150
   },
   button:{
-    alignItems:'center'
+    alignItems:'center',
+    marginBottom: 10
   },
   logoutbutton:{
     margin: 20,
@@ -284,6 +311,10 @@ const styles = StyleSheet.create({
   },
   errorMessage:{
     color :'red',
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginTop: 10,
   }
 });
 

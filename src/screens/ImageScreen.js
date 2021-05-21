@@ -44,7 +44,7 @@ const ImageScreen = ({route,navigation})=>{
       });
       
       //console.log(imageLink);
-      setUploading(false);
+      //setUploading(false);
 
       Alert.alert(
         'Photo uploaded!',
@@ -96,7 +96,12 @@ const ImageScreen = ({route,navigation})=>{
             {uploading ? (
             <View style={styles.progressBarContainer}>
                <Progress.Bar progress={transferred} width={300} />
+               <View>
+                  <Text>Click on the below button to try our prediction model.</Text>
+                  <Button title="Predict" onPress={()=>{navigation.navigate('Prediction',{'photo': photo, 'imageLink':imageLink})}}/>
+               </View>
             </View>
+            
             ) : (
                <View style={styles.buttonContainer}>
                   <View style={{ marginRight: 20}}>
